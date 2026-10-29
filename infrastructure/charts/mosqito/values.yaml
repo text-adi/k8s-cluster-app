@@ -12,6 +12,15 @@ mosquitto:
       cpu: 200m
       memory: 128Mi
 
+  config: |
+    persistence true
+    persistence_location /mosquitto/data/
+    log_dest stdout
+    listener 1883
+    listener 9090
+    protocol websockets
+    allow_anonymous true
+
 tailscale:
   enabled: true
   hostname: mosqito
