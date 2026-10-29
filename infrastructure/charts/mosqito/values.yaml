@@ -21,6 +21,12 @@ mosquitto:
     protocol websockets
     allow_anonymous true
 
+  monitoring:
+    sidecar:
+      enabled: true
+    podMonitor:
+      enabled: true
+
 tailscale:
   enabled: true
   hostname: mosqito
