@@ -1,0 +1,6 @@
+dependencies:
+- name: mosquitto
+  repository: https://charts.ar80.eu
+  version: 2.7.3
+digest: sha256:c4b8c580e21b438db958984b4fc59b82e9c4fcbcac3811c4c2c693629ef224a0
+generated: "2026-10-29T22:13:42.450576264+02:00"

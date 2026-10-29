@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mosqito
+  namespace: argocd
+spec:
+  project: apps
+  sources:
+    - repoURL: 'https://github.com/text-adi/k8s-cluster-app.git'
+      targetRevision: dev
+      path: infrastructure/charts/mosqito
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: app-mosqito
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - PruneLast=true
