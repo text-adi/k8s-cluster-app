@@ -11,3 +11,9 @@ mosquitto:
     limits:
       cpu: 200m
       memory: 128Mi
+
+tailscale:
+  enabled: true
+  hostname: mosqito
+  proxyGroup: ingress-ha
+  port: 1883
