@@ -95,7 +95,7 @@ mqtt2prometheus:
   # device metric mappings for this deployment.
   config:
     mqtt:
-      server: tcp://127.0.0.1:1883
+      server: tcp://mosqito-mosquitto:1883
       topic_path: devices/+/json
       qos: 0
     cache:
