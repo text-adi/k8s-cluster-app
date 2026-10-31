@@ -1,0 +1,50 @@
+{{- if .Values.mqtt2prometheus.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mqtt2prometheus.fullname" . }}
+  labels:
+    {{- include "mqtt2prometheus.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.mqtt2prometheus.autoscaling.enabled }}
+  replicas: {{ .Values.mqtt2prometheus.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "mqtt2prometheus.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "mqtt2prometheus.labels" . | nindent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/mqtt2prometheus/configmap.yaml") . | sha256sum }}
+    spec:
+      serviceAccountName: {{ include "mqtt2prometheus.serviceAccountName" . }}
+      containers:
+        - name: mqtt2prometheus
+          image: "{{ .Values.mqtt2prometheus.image.repository }}:{{ .Values.mqtt2prometheus.image.tag }}"
+          imagePullPolicy: {{ .Values.mqtt2prometheus.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.mqtt2prometheus.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: http
+          resources:
+            {{- toYaml .Values.mqtt2prometheus.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /config.yaml
+              subPath: config.yaml
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "mqtt2prometheus.fullname" . }}
+{{- end }}

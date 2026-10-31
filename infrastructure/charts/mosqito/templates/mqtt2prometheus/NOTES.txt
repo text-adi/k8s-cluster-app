@@ -1,0 +1,7 @@
+{{- if .Values.mqtt2prometheus.enabled }}
+mqtt2prometheus metrics are exposed at:
+  http://{{ include "mqtt2prometheus.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.mqtt2prometheus.service.port }}/metrics
+{{- if .Values.mqtt2prometheus.serviceMonitor.enabled }}
+A ServiceMonitor is enabled for Prometheus Operator discovery.
+{{- end }}
+{{- end }}

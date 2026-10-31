@@ -32,3 +32,98 @@ tailscale:
   hostname: mosqito
   proxyGroup: ingress-ha
   port: 1883
+
+mqtt2prometheus:
+  enabled: true
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/hikhvar/mqtt2prometheus
+    tag: v0.1.8-rc2
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 9641
+
+  resources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 64Mi
+
+  serviceAccount:
+    create: false
+    automount: true
+    annotations: {}
+    name: ""
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts: []
+    tls: []
+
+  httpRoute:
+    enabled: false
+    annotations: {}
+    parentRefs: []
+    hostnames: []
+    rules: []
+
+  serviceMonitor:
+    enabled: true
+    labels: {}
+    interval: 30s
+    scrapeTimeout: 10s
+    path: /metrics
+
+  # TODO: replace with the real MQTT broker address/topic and the actual
+  # device metric mappings for this deployment.
+  config:
+    mqtt:
+      server: tcp://127.0.0.1:1883
+      topic_path: devices/+/json
+      qos: 0
+    cache:
+      timeout: 24h
+    json_parsing:
+      separator: .
+    metrics:
+      - prom_name: temperature_raw
+        mqtt_name: temp
+        help: DHT22 temperature raw reading
+        type: gauge
+        const_labels:
+          sensor_type: dht22
+      - prom_name: humidity
+        mqtt_name: humidity
+        help: DHT22 humidity reading
+        type: gauge
+        const_labels:
+          sensor_type: dht22
+      - prom_name: battery_voltage
+        mqtt_name: bat_voltage
+        help: Battery voltage in mV
+        type: gauge
+        const_labels:
+          sensor_type: dht22
+      - prom_name: battery_percent
+        mqtt_name: bat_percent
+        help: Battery percentage
+        type: gauge
+        const_labels:
+          sensor_type: dht22

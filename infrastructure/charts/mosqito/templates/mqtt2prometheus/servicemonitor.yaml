@@ -1,0 +1,20 @@
+{{- if and .Values.mqtt2prometheus.enabled .Values.mqtt2prometheus.serviceMonitor.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "mqtt2prometheus.fullname" . }}
+  labels:
+    {{- include "mqtt2prometheus.labels" . | nindent 4 }}
+    {{- with .Values.mqtt2prometheus.serviceMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "mqtt2prometheus.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: http
+      path: {{ .Values.mqtt2prometheus.serviceMonitor.path }}
+      interval: {{ .Values.mqtt2prometheus.serviceMonitor.interval }}
+      scrapeTimeout: {{ .Values.mqtt2prometheus.serviceMonitor.scrapeTimeout }}
+{{- end }}
