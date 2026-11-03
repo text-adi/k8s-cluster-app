@@ -9,8 +9,6 @@ couchdb:
     className: tailscale
     annotations:
       tailscale.com/proxy-group: ingress-ha
-    hosts:
-      - obsidian
     tls:
       - hosts:
           - obsidian
