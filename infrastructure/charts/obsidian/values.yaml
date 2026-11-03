@@ -3,6 +3,8 @@ couchdb:
   couchdbConfig:
     couchdb:
       uuid: b5833f0fff5040348bdf62dc498bc8fb
+    chttpd:
+      bind_address: 0.0.0.0
 
   createAdminSecret: true
 
