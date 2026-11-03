@@ -9,8 +9,9 @@ couchdb:
     className: tailscale
     annotations:
       tailscale.com/proxy-group: ingress-ha
+      tailscale.com/hostname: obsidian
     hosts:
-      - obsidian.pleco-blenny.ts.net
+      - obsidian
     tls:
       - hosts:
-          - obsidian.pleco-blenny.ts.net
+          - obsidian
