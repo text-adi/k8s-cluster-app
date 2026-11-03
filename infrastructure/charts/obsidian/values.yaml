@@ -13,4 +13,4 @@ couchdb:
       - obsidian.pleco-blenny.ts.net
     tls:
       - hosts:
-          - obsidian
+          - obsidian.pleco-blenny.ts.net
