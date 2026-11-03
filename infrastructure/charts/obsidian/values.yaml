@@ -1,0 +1,16 @@
+---
+couchdb:
+  couchdbConfig:
+    couchdb:
+      uuid: b5833f0fff5040348bdf62dc498bc8fb
+
+  ingress:
+    enabled: true
+    className: tailscale
+    annotations:
+      tailscale.com/proxy-group: ingress-ha
+    hosts:
+      - obsidian
+    tls:
+      - hosts:
+          - obsidian
