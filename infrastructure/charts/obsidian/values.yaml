@@ -5,6 +5,12 @@ couchdb:
       uuid: b5833f0fff5040348bdf62dc498bc8fb
     chttpd:
       bind_address: 0.0.0.0
+      enable_cors: true
+    cors:
+      credentials: true
+      origins: "app://obsidian.md,capacitor://localhost,http://localhost"
+      methods: "GET,PUT,POST,HEAD,DELETE"
+      headers: "accept, authorization, content-type, origin, referer"
 
   createAdminSecret: true
 
