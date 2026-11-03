@@ -4,6 +4,15 @@ couchdb:
     couchdb:
       uuid: b5833f0fff5040348bdf62dc498bc8fb
 
+  createAdminSecret: true
+
+  autoSetup:
+    enabled: true
+    defaultDatabases:
+      - _global_changes
+      - _replicator
+      - _users
+
   ingress:
     enabled: true
     className: tailscale
