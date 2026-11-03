@@ -11,7 +11,7 @@ couchdb:
       tailscale.com/proxy-group: ingress-ha
       tailscale.com/hostname: obsidian
     hosts:
-      - obsidian
+      - obsidian.pleco-blenny.ts.net
     tls:
       - hosts:
-          - obsidian
+          - obsidian.pleco-blenny.ts.net
