@@ -99,7 +99,7 @@ mqtt2prometheus:
       topic_path: devices/+/json
       qos: 0
     cache:
-      timeout: 24h
+      timeout: 1h
     json_parsing:
       separator: .
     metrics:
